@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="childNavViewModel"
+            type="com.puneet.tunein_navigation.apiresponse.ChildNavViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginStart="@dimen/margin"
+        android:paddingBottom="@dimen/margin"
+        android:paddingTop="@dimen/margin">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/child_category_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</layout>
