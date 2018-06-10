@@ -90,8 +90,9 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofitAdapter"
     implementation "com.squareup.picasso:picasso:$picasoVersion"
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.squareup.okio:okio:1.13.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
 
     // RxJava & RxAndroid

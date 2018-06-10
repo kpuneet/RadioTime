@@ -5,17 +5,22 @@
 
     <data>
         <variable
-            name="categories"
-            type="com.puneet.tunein_navigation.model.topnavmodel.Categories" />
+            name="body"
+            type="com.puneet.tunein_navigation.model.topnavmodel.Body" />
+
+        <variable
+            name="categoryClickHandler"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{categoryClickHandler.onClick}">
 
         <TextView
             android:id="@+id/top_level_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
@@ -28,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_default="wrap"
+            app:layout_constrainedWidth="true"
             tools:text="Local Radio" />
 
 

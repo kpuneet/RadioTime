@@ -1,18 +1,23 @@
 package com.puneet.tunein_navigation.model.childnavmodel;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Body implements Serializable {
 
-    String element;
+    private String element;
 
-    String text;
+    private String text;
 
-    String key;
+    @SerializedName("guide_id")
+    private String key;
 
-    List<Children> childrenList = new ArrayList<>();
+    private String URL;
+
+    private List<Children> children = new ArrayList<>();
 
 
     public String getElement() {
@@ -39,12 +44,20 @@ public class Body implements Serializable {
         this.key = key;
     }
 
-    public List<Children> getChildrenList() {
-        return childrenList;
+    public String getURL() {
+        return URL;
     }
 
-    public void setChildrenList(List<Children> childrenList) {
-        this.childrenList = childrenList;
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public List<Children> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Children> children) {
+        this.children = children;
     }
 
     @Override
@@ -53,7 +66,7 @@ public class Body implements Serializable {
                 "element='" + element + '\'' +
                 ", text='" + text + '\'' +
                 ", key='" + key + '\'' +
-                ", childrenList=" + childrenList +
+                ", children=" + children +
                 '}';
     }
 }

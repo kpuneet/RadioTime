@@ -12,11 +12,13 @@ import com.puneet.tunein_navigation.network.RetrofitManager;
 import com.puneet.tunein_navigation.network.TopCategoriesApi;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class TopNavViewModel extends Observable {
@@ -38,9 +40,9 @@ public class TopNavViewModel extends Observable {
         getTopLevelApiResponse();
     }
 
-    public void getTopLevelApiResponse() {
-        HashMap<String,String> queryMap = new HashMap<>();
-        queryMap.put("render","json");
+    void getTopLevelApiResponse() {
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("render", "json");
         TopCategoriesApi topCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(TopCategoriesApi.class);
         Disposable disposable = topCategoriesApi.loadCategories(queryMap)
                 .subscribeOn(Schedulers.io())
@@ -60,8 +62,7 @@ public class TopNavViewModel extends Observable {
     }
 
     private void updateCategories(Categories categories) {
-        this.categories.setBodyList(categories.getBodyList());
-        this.categories.setHead(categories.getHead());
+        this.categories = categories;
         setChanged();
         notifyObservers();
     }

@@ -24,24 +24,6 @@ class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
         this.space = space;
     }
 
-/*    public Rect applyOffsets(Rect outRect, RecyclerView parent, int position) {
-        try {
-            if (position == 0 || position ==1) {
-                outRect.top = space;
-            }
-            if (!ignoreSpacingVerticalSet.contains(position)) {
-                if (halfSpacingDividerDesign.contains(position)) {
-                    outRect.bottom = space;
-                } else {
-                    outRect.bottom = space * 2;
-                }
-            }
-        } catch (Exception e) {
-            //This will pop when the adapter is cleared during a pull to refresh
-        }
-        return outRect;
-    }*/
-
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int childCount = parent.getChildCount();

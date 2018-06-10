@@ -1,7 +1,10 @@
 package com.puneet.tunein_navigation.network;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.util.Log;
+
+import com.puneet.tunein_navigation.BuildConfig;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -63,6 +67,8 @@ public class RetrofitManager {
             }
         });
 
+        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+
         httpClient = builder.build();
     }
 
@@ -71,7 +77,7 @@ public class RetrofitManager {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory.create())
-                /*.client(httpClient)*/
+                .client(httpClient)
                 .build();
     }
 }

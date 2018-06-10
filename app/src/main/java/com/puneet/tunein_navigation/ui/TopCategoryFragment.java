@@ -14,15 +14,14 @@ import com.puneet.tunein_navigation.R;
 import com.puneet.tunein_navigation.adapters.TopCategoryAdapter;
 import com.puneet.tunein_navigation.apiresponse.TopNavViewModel;
 import com.puneet.tunein_navigation.databinding.FragmentTopCategoryBinding;
-import com.puneet.tunein_navigation.adapters.onSelectCategory;
+import com.puneet.tunein_navigation.adapters.OnSelectCategory;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class TopCategoryFragment extends Fragment implements onSelectCategory, Observer {
+public class TopCategoryFragment extends Fragment implements OnSelectCategory, Observer {
 
-    FragmentTopCategoryBinding fragmentTopCategoryBinding;
-    private RecyclerView topCategoryRecyclerView;
+    private FragmentTopCategoryBinding fragmentTopCategoryBinding;
     private TopNavViewModel topNavViewModel;
 
     public static TopCategoryFragment newInstance() {
@@ -32,9 +31,9 @@ public class TopCategoryFragment extends Fragment implements onSelectCategory, O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        topNavViewModel = new TopNavViewModel(getActivity());
+        topNavViewModel = new TopNavViewModel(getActivity().getApplicationContext());
+        topNavViewModel.addObserver(this);
     }
-
 
     @Nullable
     @Override
@@ -44,44 +43,25 @@ public class TopCategoryFragment extends Fragment implements onSelectCategory, O
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //fragmentTopCategoryBinding.setTopNavViewModel(topNavViewModel);
-        topCategoryRecyclerView = fragmentTopCategoryBinding.topCategoryRecyclerView;
-        topCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-       // topCategoryRecyclerView.addItemDecoration(new ItemSpacingDecoration(this.getResources().getDimensionPixelOffset(R.dimen.Padding_Medium)));
-       // topCategoryRecyclerView.setAdapter(new TopCategoryAdapter(null, topNavViewModel.getCategories()));
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onDestroy() {
+        topNavViewModel.reset();
         super.onDestroy();
     }
 
-
     @Override
     public void onSelectCategory(String id) {
-        ((TuneInActivity)getActivity()).addSubCategoryFragment(id, false);
+        ((TuneInActivity) getActivity()).addSubCategoryFragment(id);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if(o instanceof  TopNavViewModel) {
+        if (o instanceof TopNavViewModel) {
             TopNavViewModel topNavViewModel = (TopNavViewModel) o;
+            RecyclerView topCategoryRecyclerView = fragmentTopCategoryBinding.topCategoryRecyclerView;
+            topCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             fragmentTopCategoryBinding.setTopNavViewModel(topNavViewModel);
-            topCategoryRecyclerView.setAdapter(new TopCategoryAdapter(null, topNavViewModel.getCategories()));
+            topCategoryRecyclerView.setAdapter(new TopCategoryAdapter(this, topNavViewModel.getCategories()));
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        topNavViewModel.reset();
-    }
 }

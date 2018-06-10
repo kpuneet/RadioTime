@@ -10,7 +10,7 @@ public class Body implements Serializable{
 
     private String text;
 
-    private String url;
+    private String URL;
 
     private String key;
 
@@ -39,12 +39,12 @@ public class Body implements Serializable{
         this.text = text;
     }
 
-    public String getUrl() {
-        return url;
+    public String getURL() {
+        return URL;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public String getKey() {
@@ -61,7 +61,7 @@ public class Body implements Serializable{
                 "element='" + element + '\'' +
                 ", type='" + type + '\'' +
                 ", text='" + text + '\'' +
-                ", url='" + url + '\'' +
+                ", URL='" + URL + '\'' +
                 ", key='" + key + '\'' +
                 '}';
     }

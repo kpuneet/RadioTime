@@ -1,6 +1,6 @@
 package com.puneet.tunein_navigation.adapters;
 
-public interface onSelectCategory {
+public interface OnSelectCategory {
 
     void onSelectCategory(String id);
 }

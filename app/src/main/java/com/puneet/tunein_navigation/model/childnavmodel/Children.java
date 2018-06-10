@@ -12,25 +12,15 @@ public class Children implements Serializable {
 
     private String URL;
 
-    private String bitrate;
-
-    private String reliability;
-
     private String guide_id;
 
     private String subtext;
 
     private String genre_id;
 
-    private String formats;
-
-    private String playing;
-
     private String item;
 
     private String image;
-
-    private String now_playing_id;
 
     private String preset_id;
 
@@ -67,22 +57,6 @@ public class Children implements Serializable {
         this.URL = URL;
     }
 
-    public String getBitrate() {
-        return bitrate;
-    }
-
-    public void setBitrate(String bitrate) {
-        this.bitrate = bitrate;
-    }
-
-    public String getReliability() {
-        return reliability;
-    }
-
-    public void setReliability(String reliability) {
-        this.reliability = reliability;
-    }
-
     public String getGuide_id() {
         return guide_id;
     }
@@ -107,22 +81,6 @@ public class Children implements Serializable {
         this.genre_id = genre_id;
     }
 
-    public String getFormats() {
-        return formats;
-    }
-
-    public void setFormats(String formats) {
-        this.formats = formats;
-    }
-
-    public String getPlaying() {
-        return playing;
-    }
-
-    public void setPlaying(String playing) {
-        this.playing = playing;
-    }
-
     public String getItem() {
         return item;
     }
@@ -137,14 +95,6 @@ public class Children implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getNow_playing_id() {
-        return now_playing_id;
-    }
-
-    public void setNow_playing_id(String now_playing_id) {
-        this.now_playing_id = now_playing_id;
     }
 
     public String getPreset_id() {
@@ -162,16 +112,11 @@ public class Children implements Serializable {
                 ", type='" + type + '\'' +
                 ", text='" + text + '\'' +
                 ", URL='" + URL + '\'' +
-                ", bitrate='" + bitrate + '\'' +
-                ", reliability='" + reliability + '\'' +
                 ", guide_id='" + guide_id + '\'' +
                 ", subtext='" + subtext + '\'' +
                 ", genre_id='" + genre_id + '\'' +
-                ", formats='" + formats + '\'' +
-                ", playing='" + playing + '\'' +
                 ", item='" + item + '\'' +
                 ", image='" + image + '\'' +
-                ", now_playing_id='" + now_playing_id + '\'' +
                 ", preset_id='" + preset_id + '\'' +
                 '}';
     }

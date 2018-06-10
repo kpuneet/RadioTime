@@ -29,8 +29,8 @@ public class TuneInActivity extends AppCompatActivity {
         }
     }
 
-    public void addSubCategoryFragment(String categoryId, boolean isTuneUrl) {
-        addFragment(SubCategoryFragment.newInstance(categoryId, isTuneUrl));
+    public void addSubCategoryFragment(String categoryId) {
+        addFragment(SubCategoryFragment.newInstance(categoryId));
     }
 
     private void addFragment(Fragment fragment) {

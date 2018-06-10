@@ -8,7 +8,7 @@ public class ChildCategories implements Serializable {
 
     private Head head;
 
-    private List<Body> bodyList = new ArrayList<>();
+    private List<Body> body = new ArrayList<>();
 
     public Head getHead() {
         return head;
@@ -18,19 +18,19 @@ public class ChildCategories implements Serializable {
         this.head = head;
     }
 
-    public List<Body> getBodyList() {
-        return bodyList;
+    public List<Body> getBody() {
+        return body;
     }
 
-    public void setBodyList(List<Body> bodyList) {
-        this.bodyList = bodyList;
+    public void setBody(List<Body> body) {
+        this.body = body;
     }
 
     @Override
     public String toString() {
         return "ChildrenCategories{" +
                 "head=" + head +
-                ", bodyList=" + bodyList +
+                ", body=" + body +
                 '}';
     }
 }
