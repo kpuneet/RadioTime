@@ -33,12 +33,11 @@ public class ChildNavViewModel extends Observable {
         MUSIC, GENERE
     }
 
-    public ChildNavViewModel(Context context, String childKey) {
+    public ChildNavViewModel(Context context) {
         this.context = context;
-        getChildNavApiResponse(childKey);
     }
 
-    private void getChildNavApiResponse(String id) {
+    public void getChildNavApiResponse(String id) {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("render", "json");
         ChildrenCategoriesApi childrenCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(ChildrenCategoriesApi.class);

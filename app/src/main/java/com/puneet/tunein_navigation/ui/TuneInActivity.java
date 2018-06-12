@@ -16,18 +16,13 @@ public class TuneInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         DataBindingUtil.setContentView(this, R.layout.activity_tune_in);
         if (savedInstanceState == null) {
-            //addFragment(TopCategoryFragment.newInstance());
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction()
-                    .replace(R.id.contentPanel, TopCategoryFragment.newInstance(), TopCategoryFragment.class.getSimpleName())
-                    .addToBackStack(TopCategoryFragment.class.getSimpleName());
-            ft.commit();
+            addFragment(TopCategoryFragment.newInstance());
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             super.onBackPressed();
         } else {
             finish();

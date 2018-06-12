@@ -33,6 +33,7 @@ public class TopCategoryFragment extends Fragment implements OnSelectCategory, O
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         topNavViewModel = new TopNavViewModel(getActivity().getApplicationContext());
+        topNavViewModel.getTopLevelApiResponse();
         topNavViewModel.addObserver(this);
     }
 
@@ -50,6 +51,12 @@ public class TopCategoryFragment extends Fragment implements OnSelectCategory, O
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        topNavViewModel.getTopLevelApiResponse();
+    }
+
+    @Override
     public void onSelectCategory(String id) {
         ((TuneInActivity) getActivity()).addSubCategoryFragment(id);
     }
@@ -57,11 +64,11 @@ public class TopCategoryFragment extends Fragment implements OnSelectCategory, O
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof TopNavViewModel) {
-            TopNavViewModel topNavViewModel = (TopNavViewModel) o;
+            topNavViewModel = (TopNavViewModel) o;
             RecyclerView topCategoryRecyclerView = fragmentTopCategoryBinding.topCategoryRecyclerView;
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
             topCategoryRecyclerView.setLayoutManager(linearLayoutManager);
-            topCategoryRecyclerView.addItemDecoration( new DividerItemDecoration(getActivity(),linearLayoutManager.getOrientation()));
+            topCategoryRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), linearLayoutManager.getOrientation()));
             fragmentTopCategoryBinding.setTopNavViewModel(topNavViewModel);
             topCategoryRecyclerView.setAdapter(new TopCategoryAdapter(this, topNavViewModel.getCategories()));
         }

@@ -56,7 +56,8 @@ public class SubCategoryFragment extends Fragment implements OnSelectCategory, O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        childNavViewModel = new ChildNavViewModel(getActivity().getApplicationContext(), childKey);
+        childNavViewModel = new ChildNavViewModel(getActivity().getApplicationContext());
+        childNavViewModel.getChildNavApiResponse(childKey);
         childNavViewModel.addObserver(this);
     }
 
@@ -65,6 +66,12 @@ public class SubCategoryFragment extends Fragment implements OnSelectCategory, O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         fragmentChildCategoryBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_child_category, container, false);
         return fragmentChildCategoryBinding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        childNavViewModel.getChildNavApiResponse(childKey);
     }
 
     @Override

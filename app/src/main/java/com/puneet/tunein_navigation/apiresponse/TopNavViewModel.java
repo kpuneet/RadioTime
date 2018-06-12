@@ -28,10 +28,9 @@ public class TopNavViewModel extends Observable {
 
     public TopNavViewModel(@NonNull Context context) {
         this.context = context;
-        getTopLevelApiResponse();
     }
 
-    private void getTopLevelApiResponse() {
+    public void getTopLevelApiResponse() {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("render", "json");
         TopCategoriesApi topCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(TopCategoriesApi.class);
