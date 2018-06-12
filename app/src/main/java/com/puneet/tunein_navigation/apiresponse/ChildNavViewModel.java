@@ -1,22 +1,19 @@
 package com.puneet.tunein_navigation.apiresponse;
 
 import android.content.Context;
-import android.databinding.ObservableInt;
-import android.view.View;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.puneet.tunein_navigation.R;
+import com.puneet.tunein_navigation.model.CombinedList;
+import com.puneet.tunein_navigation.model.childnavmodel.Body;
 import com.puneet.tunein_navigation.model.childnavmodel.ChildCategories;
-import com.puneet.tunein_navigation.model.topnavmodel.Categories;
+import com.puneet.tunein_navigation.model.childnavmodel.Children;
 import com.puneet.tunein_navigation.network.RetrofitManager;
 import com.puneet.tunein_navigation.network.ChildrenCategoriesApi;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -27,77 +24,57 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ChildNavViewModel extends Observable {
 
-
-    public ObservableInt progressBar;
-    public ObservableInt userRecycler;
-    public ObservableInt userLabel;
     private Context context;
-
+    private final List<CombinedList> combinedLists = new ArrayList<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private ContentListType contentListType;
 
-    private Categories categories;
-    private ChildCategories childCategories;
+    public enum ContentListType {
+        MUSIC, GENERE
+    }
 
     public ChildNavViewModel(Context context, String childKey) {
         this.context = context;
-        progressBar = new ObservableInt(View.GONE);
-        userRecycler = new ObservableInt(View.GONE);
-        userLabel = new ObservableInt(View.VISIBLE);
         getChildNavApiResponse(childKey);
     }
 
     private void getChildNavApiResponse(String id) {
-
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("render", "json");
         ChildrenCategoriesApi childrenCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(ChildrenCategoriesApi.class);
         Disposable disposable = childrenCategoriesApi.loadSubCategories(id, queryMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(responseBody -> {
-                    Gson gson = new Gson();
-                    try {
-                        String responseString = responseBody.string();
-                        JSONObject json = new JSONObject(responseString);
-                        JSONArray jsonArray = json.getJSONArray("body");
-
-                        JSONObject jsonobject = jsonArray.getJSONObject(0);
-                        Iterator<String> iterator = jsonobject.keys();
-                        boolean foundChildrenKey = false;
-                        while (iterator.hasNext()) {
-                            String key = iterator.next();
-                            foundChildrenKey = key.equals("children");
-                        }
-                        if (foundChildrenKey) {
-                            updateChildCategories(gson.fromJson(responseString, ChildCategories.class));
-                        } else {
-                            updateCategories(gson.fromJson(responseString, Categories.class));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                .subscribe(childCategories -> {
+                    updateChildCategories(childCategories);
+                }, throwable -> {
+                    Toast.makeText(context, R.string.Error_Message, Toast.LENGTH_LONG).show();
                 });
         compositeDisposable.add(disposable);
     }
 
     private void updateChildCategories(ChildCategories childCategories) {
-        this.childCategories = childCategories;
+        List<Body> bodyList = childCategories.getBody();
+        for (Body body : bodyList) {
+            combinedLists.add(new CombinedList(body.getText(),body.getURL(), ContentListType.GENERE.ordinal()));
+
+            List<Children> children = body.getChildren();
+
+            for (Children child : children) {
+                combinedLists.add(new CombinedList(child.getText(), child.getSubtext(), child.getImage(),ContentListType.MUSIC.ordinal()));
+            }
+        }
+        contentListType = childCategories.getBody().get(0).hasChildren() ? ContentListType.MUSIC : ContentListType.GENERE;
         setChanged();
         notifyObservers();
     }
 
-    private void updateCategories(Categories categories) {
-        this.categories = categories;
-        setChanged();
-        notifyObservers();
+    public List<CombinedList> getCombinedLists() {
+        return this.combinedLists;
     }
 
-    public Categories getCategories() {
-        return this.categories;
-    }
-
-    public ChildCategories getChildCategories() {
-        return this.childCategories;
+    public ContentListType getContentListType() {
+        return contentListType;
     }
 
     public void reset() {

@@ -11,7 +11,6 @@ import retrofit2.http.QueryMap;
 
 public interface TopCategoriesApi {
     /**
-     * TODO add docs
      * @return the observable API for loading categories
      */
 

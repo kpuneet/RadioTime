@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -76,9 +77,10 @@ public class SubCategoryFragment extends Fragment implements OnSelectCategory, O
     public void update(Observable o, Object arg) {
         if (o instanceof ChildNavViewModel) {
             RecyclerView childCategoryRecyclerView = fragmentChildCategoryBinding.childCategoryRecyclerView;
-            childCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            // childCategoryRecyclerView.addItemDecoration(new ItemSpacingDecoration(this.getResources().getDimensionPixelOffset(R.dimen.Padding_Medium)));
-            childCategoryRecyclerView.setAdapter(new ChildCategoryAdapter(this, childNavViewModel.getChildCategories()));
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            childCategoryRecyclerView.setLayoutManager(linearLayoutManager);
+            childCategoryRecyclerView.addItemDecoration( new DividerItemDecoration(getActivity(),linearLayoutManager.getOrientation()));
+            childCategoryRecyclerView.setAdapter(new ChildCategoryAdapter(getActivity(),this, childNavViewModel.getCombinedLists(), childNavViewModel.getContentListType()));
         }
     }
 

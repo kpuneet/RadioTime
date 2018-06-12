@@ -67,7 +67,8 @@ public class RetrofitManager {
             }
         });
 
-        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        //TODO Debug netweork request
+      //   builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
         httpClient = builder.build();
     }

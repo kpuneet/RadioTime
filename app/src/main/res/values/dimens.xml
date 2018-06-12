@@ -5,4 +5,8 @@
     <dimen name="text_height">24dp</dimen>
     <dimen name="Padding_Medium">12</dimen>
     <dimen name="list_item_text_size">18sp</dimen>
+    <dimen name="default_touchable_height">48sp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="sub_text_height">24dp</dimen>
 </resources>

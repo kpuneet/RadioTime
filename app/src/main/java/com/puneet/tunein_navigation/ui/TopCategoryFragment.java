@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,7 +59,9 @@ public class TopCategoryFragment extends Fragment implements OnSelectCategory, O
         if (o instanceof TopNavViewModel) {
             TopNavViewModel topNavViewModel = (TopNavViewModel) o;
             RecyclerView topCategoryRecyclerView = fragmentTopCategoryBinding.topCategoryRecyclerView;
-            topCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            topCategoryRecyclerView.setLayoutManager(linearLayoutManager);
+            topCategoryRecyclerView.addItemDecoration( new DividerItemDecoration(getActivity(),linearLayoutManager.getOrientation()));
             fragmentTopCategoryBinding.setTopNavViewModel(topNavViewModel);
             topCategoryRecyclerView.setAdapter(new TopCategoryAdapter(this, topNavViewModel.getCategories()));
         }

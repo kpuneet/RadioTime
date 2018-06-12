@@ -1,13 +1,13 @@
 package com.puneet.tunein_navigation.ui;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.puneet.tunein_navigation.R;
-import com.puneet.tunein_navigation.utils.RxBus;
 
 public class TuneInActivity extends AppCompatActivity {
 
@@ -16,13 +16,18 @@ public class TuneInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         DataBindingUtil.setContentView(this, R.layout.activity_tune_in);
         if (savedInstanceState == null) {
-            addFragment(TopCategoryFragment.newInstance());
+            //addFragment(TopCategoryFragment.newInstance());
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction()
+                    .replace(R.id.contentPanel, TopCategoryFragment.newInstance(), TopCategoryFragment.class.getSimpleName())
+                    .addToBackStack(TopCategoryFragment.class.getSimpleName());
+            ft.commit();
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             super.onBackPressed();
         } else {
             finish();
@@ -34,9 +39,10 @@ public class TuneInActivity extends AppCompatActivity {
     }
 
     private void addFragment(Fragment fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.contentPanel, fragment, fragment.getClass().getSimpleName());
-        ft.addToBackStack(fragment.getClass().getSimpleName());
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction()
+                .replace(R.id.contentPanel, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(fragment.getClass().getSimpleName());
         ft.commit();
     }
 

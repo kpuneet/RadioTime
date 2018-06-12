@@ -14,10 +14,7 @@ import retrofit2.http.Url;
 
 public interface ChildrenCategoriesApi {
 
-   /* @GET("Browse.ashx?")
-    Observable<ChildCategories> loadChildrenCategories(@Url String id);*/
-
     @GET
-    Observable<ResponseBody> loadSubCategories(@Url String url, @QueryMap Map<String, String> queryMap);
+    Observable<ChildCategories> loadSubCategories(@Url String url, @QueryMap Map<String, String> queryMap);
 
 }

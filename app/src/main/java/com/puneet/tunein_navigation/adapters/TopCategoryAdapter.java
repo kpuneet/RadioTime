@@ -5,20 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding2.view.RxView;
 import com.puneet.tunein_navigation.R;
 import com.puneet.tunein_navigation.databinding.TopCategoryLayoutBinding;
 import com.puneet.tunein_navigation.model.topnavmodel.Categories;
-import com.puneet.tunein_navigation.ui.TopCategoryFragment;
-
-import io.reactivex.functions.Consumer;
 
 public class TopCategoryAdapter extends RecyclerView.Adapter<TopCategoryAdapter.TopCategoryViewHolder> {
 
-    Categories categories;
-    OnSelectCategory onSelectCategory;
+    private Categories categories;
+    private OnSelectCategory onSelectCategory;
 
     public TopCategoryAdapter(OnSelectCategory onSelectCategory, Categories categories) {
         this.onSelectCategory = onSelectCategory;
@@ -35,10 +32,9 @@ public class TopCategoryAdapter extends RecyclerView.Adapter<TopCategoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final TopCategoryViewHolder holder, final int position) {
-        Log.d(TopCategoryAdapter.class.getSimpleName(), "Coming to bind view holder");
-        holder.topCategoryLayoutBinding.setBody(categories.getBody().get(position));
+        holder.topCategoryLayoutBinding.setBody(categories.getBody().get(holder.getAdapterPosition()));
         holder.topCategoryLayoutBinding.topLevelTitle.setText(categories.getBody().get(position).getText());
-        holder.bind(categories);
+        holder.topCategoryLayoutBinding.setCategoryClickHandler(v -> onSelectCategory.onSelectCategory(categories.getBody().get(holder.getAdapterPosition()).getURL()));
     }
 
     @Override
@@ -60,14 +56,5 @@ public class TopCategoryAdapter extends RecyclerView.Adapter<TopCategoryAdapter.
             this.onSelectCategory = onSelectCategory;
         }
 
-        private void bind(final Categories categories) {
-            RxView.clicks(topCategoryLayoutBinding.topLevelTitle)
-                    .subscribe(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object o) throws Exception {
-                            onSelectCategory.onSelectCategory(categories.getBody().get(getAdapterPosition()).getURL());
-                        }
-                    });
-        }
     }
 }

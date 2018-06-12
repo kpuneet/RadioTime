@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Body implements Serializable {
 
+    public Body() {
+
+    }
+
     private String element;
 
     private String text;
@@ -19,29 +23,12 @@ public class Body implements Serializable {
 
     private List<Children> children = new ArrayList<>();
 
-
-    public String getElement() {
-        return element;
-    }
-
-    public void setElement(String element) {
-        this.element = element;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getURL() {
@@ -54,6 +41,10 @@ public class Body implements Serializable {
 
     public List<Children> getChildren() {
         return children;
+    }
+
+    public boolean hasChildren() {
+        return (this.children.isEmpty() || this.children == null) ? false : true;
     }
 
     public void setChildren(List<Children> children) {

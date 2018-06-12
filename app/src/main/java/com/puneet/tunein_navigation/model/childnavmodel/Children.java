@@ -16,14 +16,9 @@ public class Children implements Serializable {
 
     private String subtext;
 
-    private String genre_id;
-
     private String item;
 
     private String image;
-
-    private String preset_id;
-
 
     public String getElement() {
         return element;
@@ -73,14 +68,6 @@ public class Children implements Serializable {
         this.subtext = subtext;
     }
 
-    public String getGenre_id() {
-        return genre_id;
-    }
-
-    public void setGenre_id(String genre_id) {
-        this.genre_id = genre_id;
-    }
-
     public String getItem() {
         return item;
     }
@@ -97,14 +84,6 @@ public class Children implements Serializable {
         this.image = image;
     }
 
-    public String getPreset_id() {
-        return preset_id;
-    }
-
-    public void setPreset_id(String preset_id) {
-        this.preset_id = preset_id;
-    }
-
     @Override
     public String toString() {
         return "Children{" +
@@ -114,10 +93,8 @@ public class Children implements Serializable {
                 ", URL='" + URL + '\'' +
                 ", guide_id='" + guide_id + '\'' +
                 ", subtext='" + subtext + '\'' +
-                ", genre_id='" + genre_id + '\'' +
                 ", item='" + item + '\'' +
                 ", image='" + image + '\'' +
-                ", preset_id='" + preset_id + '\'' +
                 '}';
     }
 
