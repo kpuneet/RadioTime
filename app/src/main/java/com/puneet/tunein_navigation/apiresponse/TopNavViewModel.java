@@ -31,17 +31,15 @@ public class TopNavViewModel extends Observable {
     }
 
     public void getTopLevelApiResponse() {
-        Map<String, String> queryMap = new HashMap<>();
-        queryMap.put("render", "json");
         TopCategoriesApi topCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(TopCategoriesApi.class);
-        Disposable disposable = topCategoriesApi.loadCategories(queryMap)
+        Disposable disposable = topCategoriesApi.loadCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(categories -> {
-                    updateCategories(categories);
-                }, throwable -> {
-                    Toast.makeText(context, R.string.Error_Message, Toast.LENGTH_LONG).show();
-                });
+                .subscribe(categoriesResponse -> {
+                    if((categoriesResponse.isSuccessful() || categoriesResponse.code() == 304/*not modified*/) && categoriesResponse.body() != null) {
+                        updateCategories(categoriesResponse.body());
+                    }
+                }, throwable -> Toast.makeText(context, R.string.Error_Message, Toast.LENGTH_LONG).show());
         compositeDisposable.add(disposable);
     }
 

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">TuneIn-Nav-Demo</string>
     <string name="Error_Message">There is some problem in connecting to Internet</string>
-    <string name="Play_Audio_Message">Play Audio here</string>
+    <string name="Play_Audio_Error">Play Audio here</string>
 </resources>

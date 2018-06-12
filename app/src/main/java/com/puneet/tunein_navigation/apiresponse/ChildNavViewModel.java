@@ -12,15 +12,14 @@ import com.puneet.tunein_navigation.network.RetrofitManager;
 import com.puneet.tunein_navigation.network.ChildrenCategoriesApi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class ChildNavViewModel extends Observable {
 
@@ -38,17 +37,15 @@ public class ChildNavViewModel extends Observable {
     }
 
     public void getChildNavApiResponse(String id) {
-        Map<String, String> queryMap = new HashMap<>();
-        queryMap.put("render", "json");
         ChildrenCategoriesApi childrenCategoriesApi = RetrofitManager.sInstance.getClient(context.getString(R.string.TuneIn_Endpoint)).create(ChildrenCategoriesApi.class);
-        Disposable disposable = childrenCategoriesApi.loadSubCategories(id, queryMap)
+        Disposable disposable = childrenCategoriesApi.loadSubCategories(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(childCategories -> {
-                    updateChildCategories(childCategories);
-                }, throwable -> {
-                    Toast.makeText(context, R.string.Error_Message, Toast.LENGTH_LONG).show();
-                });
+                .subscribe((Response<ChildCategories> childCategoriesResponse) -> {
+                    if((childCategoriesResponse.isSuccessful() || childCategoriesResponse.code() == 304/*not modified*/) && childCategoriesResponse.body() != null) {
+                        updateChildCategories(childCategoriesResponse.body());
+                    }
+                }, throwable -> Toast.makeText(context, R.string.Error_Message, Toast.LENGTH_LONG).show());
         compositeDisposable.add(disposable);
     }
 
@@ -56,9 +53,7 @@ public class ChildNavViewModel extends Observable {
         List<Body> bodyList = childCategories.getBody();
         for (Body body : bodyList) {
             combinedLists.add(new CombinedList(body.getText(),body.getURL(), ContentListType.GENERE.ordinal()));
-
             List<Children> children = body.getChildren();
-
             for (Children child : children) {
                 combinedLists.add(new CombinedList(child.getText(), child.getSubtext(), child.getImage(),ContentListType.MUSIC.ordinal()));
             }

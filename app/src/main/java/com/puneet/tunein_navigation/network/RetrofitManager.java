@@ -1,13 +1,9 @@
 package com.puneet.tunein_navigation.network;
 
 import android.app.Application;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.puneet.tunein_navigation.BuildConfig;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +15,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -27,7 +22,7 @@ public class RetrofitManager {
 
     public static RetrofitManager sInstance = new RetrofitManager();
     private OkHttpClient httpClient;
-    public static int API_TIMEOUT = 20000;
+    private static int API_TIMEOUT = 20000;
     private static String RENDER = "render";
     private static String JSON = "json";
 

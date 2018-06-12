@@ -56,7 +56,7 @@ public class ChildCategoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 MusicCategoryLayoutBinding musicCategoryLayoutBinding = (MusicCategoryLayoutBinding) holder.binding;
                 musicCategoryLayoutBinding.setChildren(musicList);
                 Picasso.with(musicCategoryLayoutBinding.childImage.getContext()).load(musicList.getImageUrl()).into(musicCategoryLayoutBinding.childImage);
-                musicCategoryLayoutBinding.setClickHandler(view -> Toast.makeText(context, context.getString(R.string.Play_Audio_Message), Toast.LENGTH_SHORT).show());
+                musicCategoryLayoutBinding.setClickHandler(view -> Toast.makeText(context, context.getString(R.string.Play_Audio_Error), Toast.LENGTH_SHORT).show());
                 musicCategoryLayoutBinding.executePendingBindings();
                 break;
             }
